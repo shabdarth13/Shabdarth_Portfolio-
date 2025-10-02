@@ -44,19 +44,19 @@
     <h2>My Expertise</h2>
     <div class="skills-container">
       <div class="skill">
-        <div class="circle" data-percent="95"><span>0%</span></div>
+        <div class="circle" data-percent="95"><span>95%</span></div>
         <h3>Data Analytics (Python, SQL, Excel)</h3>
       </div>
       <div class="skill">
-        <div class="circle" data-percent="80"><span>0%</span></div>
+        <div class="circle" data-percent="80"><span>80%</span></div>
         <h3>Languages(C,C++,Java)</h3>
       </div>
       <div class="skill">
-        <div class="circle" data-percent="45"><span>0%</span></div>
+        <div class="circle" data-percent="45"><span>45%</span></div>
         <h3>Cybersecurity & Threat Detection</h3>
       </div>
       <div class="skill">
-        <div class="circle" data-percent="55"><span>0%</span></div>
+        <div class="circle" data-percent="55"><span>55%</span></div>
         <h3>AI/ML</h3>
       </div>
     </div>
@@ -66,7 +66,6 @@
   <section id="achievements">
     <h2>Achievements & Certifications</h2>
     <div class="achievement-list">
-      <!-- Achievement Cards -->
       <div class="achievement-card">
         <div class="card-inner">
           <div class="card-front">
@@ -85,10 +84,10 @@
         <div class="card-inner">
           <div class="card-front">
             <i class="fas fa-award"></i>
-            <h3>Networking and Cybersecurity Internship @Graphic Era Hill University</h3>
+            <h3>Networking and Cybersecurity Internship @Graphic Era Hill University </h3>
           </div>
           <div class="card-back">
-            <p>Worked on hands-on projects that allowed me to directly contribute to strengthening network defenses, assess vulnerabilities, and understand the critical components of an incident response plan. This internship has equipped me with practical skills that are crucial in today's digital landscape.</p>
+             <p>Worked on hands-on projects that allowed me to directly contribute to strengthening network defenses, assess vulnerabilities, and understand the critical components of an incident response plan. This internship has equipped me with practical skills that are crucial in today's digital landscape..</p>
             <a href="https://drive.google.com/file/d/1TthoE1jirAe4F1ZeWUQkhdPk7hoYTKOB/view?usp=sharing" target="_blank" class="btn">View Certificate</a>
           </div>
         </div>
@@ -102,6 +101,7 @@
           <div class="card-back">
             <p>Demonstrated professionalism, dedication, and excellent proficiency in the role of Data Analyst Intern.</p>
             <a href="https://drive.google.com/file/d/1RJ7nqQCCH1nMy3wdVlRQE52oJlnYP3r7/view?usp=sharing" target="_blank" class="btn">View Certificate</a>
+            
           </div>
         </div>
       </div>
@@ -109,15 +109,29 @@
         <div class="card-inner">
           <div class="card-front">
             <i class="fa-solid fa-user-pen"></i>
-            <h3>Data Analyst Trainee @MedTourEasy</h3>
+            <h3>Data Analyst Traniee @MedTourEasy</h3>
           </div>
           <div class="card-back">
-            <p>Experienced the hands-on working of a Data Analytics Professional and worked under the supervision of project mentor & developed the project entitled “Analysis of Chemical Components"</p>
+            <p>Experienced the hands on working of a Data Analytics Professional and worked under the supervision of project mentor & developed the project entitled “Analysis of Chemical Components"</p>
           </div>
         </div>
       </div>
+      </div>
+       <div class="achievement-card">
+        <div class="card-inner">
+          <!--<div class="card-front">
+            <i class="fas fa-trophy"></i>
+            <h3>Hackathon Winner</h3>
+          </div>
+          <div class="card-back">
+            <p>Awarded first place in a national-level hackathon for developing an AI-driven security solution for small businesses.</p>
+          </div>
+        </div>-->
+      </div>
     </div>
   </section>
+
+
 
   <!-- Social Section -->
   <section id="social">
@@ -131,74 +145,11 @@
     </div>
   </section>
 
+
   <footer>
     <p>&copy; 2025 Shabdarth. All rights reserved.</p>
   </footer>
 
   <script src="js/script.js"></script>
-
-  <!-- Scroll-triggered Animated Skill Circles -->
-  <script>
-    const skillSection = document.getElementById('skills');
-    let animated = false;
-
-    function animateCircles() {
-        if (animated) return;
-        animated = true;
-
-        document.querySelectorAll('.circle').forEach(circle => {
-            const percent = circle.getAttribute('data-percent');
-            const span = circle.querySelector('span');
-
-            const canvas = document.createElement('canvas');
-            canvas.width = 120;
-            canvas.height = 120;
-            circle.appendChild(canvas);
-            const ctx = canvas.getContext('2d');
-            const radius = 54;
-            const lineWidth = 6;
-            let currentPercent = 0;
-
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                // Background circle
-                ctx.beginPath();
-                ctx.arc(60, 60, radius, 0, Math.PI * 2);
-                ctx.strokeStyle = '#222';
-                ctx.lineWidth = lineWidth;
-                ctx.stroke();
-
-                // Foreground progress
-                const endAngle = (currentPercent / 100) * Math.PI * 2;
-                ctx.beginPath();
-                ctx.arc(60, 60, radius, -Math.PI/2, endAngle - Math.PI/2);
-                ctx.strokeStyle = '#43bddc';
-                ctx.lineWidth = lineWidth;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-
-                span.textContent = Math.round(currentPercent) + '%';
-
-                if (currentPercent < percent) {
-                    currentPercent += 1;
-                    requestAnimationFrame(animate);
-                }
-            }
-            animate();
-        });
-    }
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting){
-                animateCircles();
-            }
-        });
-    }, { threshold: 0.5 });
-
-    observer.observe(skillSection);
-  </script>
-
 </body>
 </html>
