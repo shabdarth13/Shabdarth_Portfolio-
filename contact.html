@@ -29,17 +29,15 @@
     <h2>Contact Me</h2>
     <p>Have a project or idea in mind? Let's connect!</p>
     
-    <form id="contactForm" action="https://formspree.io/f/mqaybpjk" method="POST">
+    <form id="contactForm">
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <textarea name="message" placeholder="Message" required></textarea>
       <button type="submit">Send</button>
     </form>
 
-    <!-- Success message -->
-    <p id="successMessage" style="display:none; text-align:center; margin-top:15px; color:#43bddc; font-weight:bold;">
-      Thank you! Your message has been sent successfully.
-    </p>
+    <!-- Success / Error message -->
+    <p id="formMessage" style="display:none; text-align:center; margin-top:15px; font-weight:bold;"></p>
   </section>
 
   <footer>
@@ -49,7 +47,7 @@
   <script src="js/script.js"></script>
 
   <script>
-    // Contact page themed particles
+    // Contact page particles (same as before)
     (() => {
       const canvas = document.getElementById('contactCanvas');
       const ctx = canvas.getContext('2d');
@@ -66,34 +64,28 @@
 
       class Particle {
         constructor(x, y, dx, dy, size, type){
-          this.x = x;
-          this.y = y;
-          this.dx = dx;
-          this.dy = dy;
-          this.size = size;
-          this.type = type;
+          this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size; this.type = type;
         }
         draw(){
-          if(this.type === "cyber"){
+          if(this.type==="cyber"){
             ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-            ctx.fillStyle = 'rgba(67,189,220,0.8)';
+            ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+            ctx.fillStyle='rgba(67,189,220,0.8)';
             ctx.fill();
-          } else if(this.type === "data"){
-            ctx.fillStyle = 'rgba(255,193,7,0.7)';
-            ctx.fillRect(this.x, this.y, this.size, this.size*2);
+          } else if(this.type==="data"){
+            ctx.fillStyle='rgba(255,193,7,0.7)';
+            ctx.fillRect(this.x,this.y,this.size,this.size*2);
           }
         }
         update(){
-          if(this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-          if(this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-          this.x += this.dx;
-          this.y += this.dy;
+          if(this.x+this.size>canvas.width||this.x-this.size<0) this.dx=-this.dx;
+          if(this.y+this.size>canvas.height||this.y-this.size<0) this.dy=-this.dy;
+          this.x+=this.dx; this.y+=this.dy;
 
-          if(this.type === "cyber"){
+          if(this.type==="cyber"){
             for(let i=0;i<particles.length;i++){
               if(particles[i].type==="cyber" && particles[i]!==this){
-                let dist = Math.hypot(this.x - particles[i].x, this.y - particles[i].y);
+                let dist=Math.hypot(this.x-particles[i].x,this.y-particles[i].y);
                 if(dist<150){
                   ctx.beginPath();
                   ctx.strokeStyle=`rgba(67,189,220,${1-dist/150})`;
@@ -105,7 +97,6 @@
               }
             }
           }
-
           this.draw();
         }
       }
@@ -133,14 +124,41 @@
       animate();
     })();
 
-    // Form submission using Formspree (no fetch, simple native submit)
-    const contactForm = document.getElementById('contactForm');
-    const successMessage = document.getElementById('successMessage');
+    // Formspree JS integration
+    const form = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
 
-    contactForm.addEventListener('submit', function(e){
-      successMessage.style.display = 'block';
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const endpoint = "https://formspree.io/f/mqaybpjk";
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          body: formData,
+          headers: { "Accept": "application/json" }
+        });
+
+        if(response.ok){
+          formMessage.style.display = 'block';
+          formMessage.style.color = '#43bddc';
+          formMessage.textContent = "Thank you! Your message has been sent successfully.";
+          form.reset();
+        } else {
+          formMessage.style.display = 'block';
+          formMessage.style.color = '#ff6b6b';
+          formMessage.textContent = "Oops! Something went wrong. Please try again.";
+        }
+      } catch (error) {
+        formMessage.style.display = 'block';
+        formMessage.style.color = '#ff6b6b';
+        formMessage.textContent = "Network error. Please check your connection.";
+      }
+
       // Hide message after 5 seconds
-      setTimeout(() => { successMessage.style.display = 'none'; }, 5000);
+      setTimeout(()=>{ formMessage.style.display='none'; },5000);
     });
   </script>
 </body>
