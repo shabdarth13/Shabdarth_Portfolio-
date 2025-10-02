@@ -21,7 +21,7 @@ const observer = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.2 });
 
-document.querySelectorAll('.animate').forEach(l => observer.observe(el));
+document.querySelectorAll('.animate').forEach(el => observer.observe(el));
 
 /* =================== Project Card Hover Particles =================== */
 document.querySelectorAll('.project-card').forEach(card => {
