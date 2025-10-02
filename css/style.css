@@ -28,29 +28,8 @@ nav ul li a:hover, nav ul li a.active { color:#43bddc; font-weight:bold; }
 #skills h2 { text-align:center; font-size:2.5em; margin-bottom:40px; color:#43bddc; }
 .skills-container { display:flex; flex-wrap:wrap; justify-content:space-around; gap:40px; }
 .skill { text-align:center; color:#c9d1d9; position: relative; }
-.circle {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin: auto;
-    position: relative;
-}
-.circle span {
-    position: absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%);
-    font-weight: bold;
-    font-size: 1.2em;
-    color:#43bddc;
-    z-index: 2;
-}
-.circle canvas {
-    position: absolute;
-    top:0;
-    left:0;
-    z-index:1;
-}
+.circle { width:120px; height:120px; border-radius:50%; border:6px solid #222; position:relative; margin:auto; }
+.circle span { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-weight:bold; font-size:1.2em; color:#43bddc; }
 
 /* =================== Projects Section =================== */
 #projects { position: relative; padding:60px 20px; max-width:1200px; margin:auto; z-index:1; }
@@ -67,13 +46,6 @@ nav ul li a:hover, nav ul li a.active { color:#43bddc; font-weight:bold; }
 .project-card .card-back p { font-size:0.95em; margin-bottom:15px; }
 .project-card .card-back .btn { display:inline-block; padding:8px 12px; background:#43bddc; color:#0d1117; border-radius:6px; transition:0.3s; }
 .project-card .card-back .btn:hover { background:#0af; color:#fff; }
-.project-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(67,189,220,0.3) 0%, transparent 70%); opacity: 0; transition: opacity 0.5s; pointer-events: none; }
-.project-card:hover::before { opacity: 1; animation: pulse 1.5s infinite; }
-@keyframes pulse { 0% { transform: scale(0.8); opacity:0.5; } 50% { transform: scale(1); opacity:0.8; } 100% { transform: scale(0.8); opacity:0.5; } }
-.project-card .particle { position:absolute; width:4px; height:4px; background:#43bddc; border-radius:50%; opacity:0.7; pointer-events:none; animation: floatParticle 3s infinite ease-in-out; }
-@keyframes floatParticle { 0% { transform: translateY(0px) translateX(0px); opacity:0.7; } 50% { transform: translateY(-10px) translateX(5px); opacity:1; } 100% { transform: translateY(0px) translateX(0px); opacity:0.7; }
-}
-#projectsCanvas { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 
 /* =================== Achievements Section =================== */
 #achievements { padding:60px 20px; text-align:center; background:#0b0f14; }
@@ -90,7 +62,6 @@ nav ul li a:hover, nav ul li a.active { color:#43bddc; font-weight:bold; }
 
 /* =================== About Section =================== */
 .about-container { display:flex; align-items:center; gap:40px; max-width:1000px; margin:60px auto; padding:0 20px; flex-wrap: wrap; position: relative; z-index:1; }
-#aboutCanvas { position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 .about-img { flex:1; min-width:280px; display:flex; justify-content:center; }
 .about-img img { width:100%; max-width:320px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.5); }
 .about-content { flex:2; min-width:280px; }
@@ -109,7 +80,6 @@ nav ul li a:hover, nav ul li a.active { color:#43bddc; font-weight:bold; }
 #contact input:focus, #contact textarea:focus { outline:none; border-color:#0af; box-shadow:0 0 8px #43bddc; }
 #contact button { padding:12px; border:none; border-radius:6px; background:#43bddc; color:#0d1117; font-size:1em; font-weight:bold; transition:0.3s; }
 #contact button:hover { background:#0af; color:#fff; box-shadow:0 0 10px #43bddc; }
-#contactCanvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
 
 /* =================== Social Section =================== */
 #social { padding:60px 20px; text-align:center; }
