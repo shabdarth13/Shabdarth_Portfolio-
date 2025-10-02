@@ -6,15 +6,6 @@
   <title>Contact | Shabdarth Portfolio</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    #thankYouMessage {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
-      font-size: 1.2em;
-      color: green;
-    }
-  </style>
 </head>
 <body>
   <!-- Navbar -->
@@ -37,48 +28,35 @@
   <section id="contact">
     <h2>Contact Me</h2>
     <p>Have a project or idea in mind? Let's connect!</p>
-    
-    <form id="contactForm"
-          action="https://formsubmit.co/shabdarth53@gmail.com"
-          method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Message" required></textarea>
-      
-      <!-- Hidden fields for FormSubmit -->
-      <input type="hidden" name="_captcha" value="false">
+    <form id="contactForm">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Message" required></textarea>
       <button type="submit">Send</button>
     </form>
-
-    <!-- Thank You Message -->
-    <div id="thankYouMessage">
-      ✅ Thank you for reaching out! Your message has been sent successfully.
-    </div>
   </section>
 
   <footer>
     <p>&copy; 2025 Shabdarth. All rights reserved.</p>
   </footer>
 
-  <!-- External script -->
   <script src="js/script.js"></script>
-
-  <!-- Contact page particles (unchanged) -->
   <script>
+    // Contact page themed particles: cybersecurity nodes + data bars
     (() => {
       const canvas = document.getElementById('contactCanvas');
       const ctx = canvas.getContext('2d');
       let particles = [];
-  
+
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-  
+
       window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         initParticles();
       });
-  
+
       class Particle {
         constructor(x, y, dx, dy, size, type){
           this.x = x;
@@ -100,49 +78,49 @@
           }
         }
         update(){
-          if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-          if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+          if(this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+          if(this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
           this.x += this.dx;
           this.y += this.dy;
-  
-          if (this.type === "cyber") {
-            for (let i = 0; i < particles.length; i++) {
-              if (particles[i].type === "cyber" && particles[i] !== this) {
+
+          if(this.type === "cyber"){
+            for(let i=0;i<particles.length;i++){
+              if(particles[i].type==="cyber" && particles[i]!==this){
                 let dist = Math.hypot(this.x - particles[i].x, this.y - particles[i].y);
-                if (dist < 150) {
+                if(dist<150){
                   ctx.beginPath();
-                  ctx.strokeStyle = `rgba(67,189,220,${1 - dist/150})`;
-                  ctx.lineWidth = 1;
-                  ctx.moveTo(this.x, this.y);
-                  ctx.lineTo(particles[i].x, particles[i].y);
+                  ctx.strokeStyle=`rgba(67,189,220,${1-dist/150})`;
+                  ctx.lineWidth=1;
+                  ctx.moveTo(this.x,this.y);
+                  ctx.lineTo(particles[i].x,particles[i].y);
                   ctx.stroke();
                 }
               }
             }
           }
-  
+
           this.draw();
         }
       }
-  
+
       function initParticles(){
-        particles = [];
-        const numParticles = Math.floor(canvas.width / 30);
-        for (let i = 0; i < numParticles; i++) {
-          let size = Math.random() * 3 + 2;
-          let x = Math.random() * canvas.width;
-          let y = Math.random() * canvas.height;
-          let dx = (Math.random() - 0.5) * 1.5;
-          let dy = (Math.random() - 0.5) * 1.5;
-          let type = Math.random() > 0.5 ? "cyber" : "data";
-          particles.push(new Particle(x, y, dx, dy, size, type));
+        particles=[];
+        const numParticles=Math.floor(canvas.width/30);
+        for(let i=0;i<numParticles;i++){
+          let size=Math.random()*3+2;
+          let x=Math.random()*canvas.width;
+          let y=Math.random()*canvas.height;
+          let dx=(Math.random()-0.5)*1.5;
+          let dy=(Math.random()-0.5)*1.5;
+          let type=Math.random()>0.5?"cyber":"data";
+          particles.push(new Particle(x,y,dx,dy,size,type));
         }
       }
-  
       initParticles();
+
       function animate(){
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => p.update());
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>p.update());
         requestAnimationFrame(animate);
       }
       animate();

@@ -1,36 +1,47 @@
-// -------------------
-// Contact Form Handler
-// -------------------
-const contactForm = document.getElementById("contactForm");
+/* =================== Navbar Active Link =================== */
+const currentPage = location.pathname.split("/").pop();
+document.querySelectorAll('nav ul li a').forEach(link => {
+  if(link.getAttribute('href') === currentPage){
+    link.classList.add('active');
+  }
+});
 
-if (contactForm) {
-  contactForm.addEventListener("submit", function () {
-    // Create thank you message
-    const thankYou = document.createElement("div");
-    thankYou.id = "thankYouMessage";
-    thankYou.innerHTML = "✅ Thank you! Your message has been sent.";
-    thankYou.style.color = "limegreen";
-    thankYou.style.textAlign = "center";
-    thankYou.style.marginTop = "15px";
-    thankYou.style.fontSize = "1.1em";
+/* =================== Contact Form =================== */
+document.getElementById('contactForm')?.addEventListener('submit', function(e){
+  e.preventDefault();
+  alert('Message sent! Thank you.');
+});
 
-    // Insert after form
-    this.insertAdjacentElement("afterend", thankYou);
-
-    // Hide form so only thank you message is shown
-    this.style.display = "none";
+/* =================== Scroll-triggered Animations =================== */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
   });
-}
+}, { threshold: 0.2 });
 
-// -------------------
-// Background Animation (your existing code remains the same)
-// -------------------
-(() => {
-  const canvas = document.getElementById('contactCanvas');
-  if (!canvas) return; // only run on contact page
+document.querySelectorAll('.animate').forEach(l => observer.observe(el));
 
+/* =================== Project Card Hover Particles =================== */
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = `${e.offsetX}px`;
+    particle.style.top = `${e.offsetY}px`;
+    card.appendChild(particle);
+    setTimeout(() => particle.remove(), 1000);
+  });
+});
+
+/* =================== Full-page Canvas Particles =================== */
+function initCanvasParticles(canvasId){
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
   const ctx = canvas.getContext('2d');
   let particles = [];
+  let mouse = { x:null, y:null };
 
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -41,45 +52,56 @@ if (contactForm) {
     initParticles();
   });
 
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.x;
+    mouse.y = e.y;
+  });
+
   class Particle {
-    constructor(x, y, dx, dy, size, type) {
-      this.x = x;
-      this.y = y;
-      this.dx = dx;
-      this.dy = dy;
-      this.size = size;
-      this.type = type; // cyber or data
+    constructor(x, y, dx, dy, size, type){
+      this.x = x; this.y = y; this.dx = dx; this.dy = dy; this.size = size;
+      this.type = type || "cyber";
     }
-    draw() {
-      if (this.type === "cyber") {
+    draw(){
+      if(this.type==="cyber"){
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(67,189,220,0.8)';
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fillStyle = '#43bddc';
         ctx.fill();
-      } else if (this.type === "data") {
-        ctx.fillStyle = 'rgba(255,193,7,0.7)';
-        ctx.fillRect(this.x, this.y, this.size, this.size * 2);
+      } else if(this.type==="data"){
+        ctx.fillStyle='rgba(255,193,7,0.7)';
+        ctx.fillRect(this.x,this.y,this.size,this.size*2);
       }
     }
-    update() {
-      if (this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
-      if (this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
-      this.x += this.dx;
-      this.y += this.dy;
+    update(){
+      if(this.x + this.size > canvas.width || this.x - this.size < 0) this.dx = -this.dx;
+      if(this.y + this.size > canvas.height || this.y - this.size < 0) this.dy = -this.dy;
+      this.x += this.dx; this.y += this.dy;
 
-      if (this.type === "cyber") {
-        for (let i = 0; i < particles.length; i++) {
-          if (particles[i].type === "cyber" && particles[i] !== this) {
-            let dist = Math.hypot(this.x - particles[i].x, this.y - particles[i].y);
-            if (dist < 150) {
+      if(this.type==="cyber"){
+        for(let i=0;i<particles.length;i++){
+          if(particles[i].type==="cyber" && particles[i]!==this){
+            let dist=Math.hypot(this.x - particles[i].x, this.y - particles[i].y);
+            if(dist<150){
               ctx.beginPath();
-              ctx.strokeStyle = `rgba(67,189,220,${1 - dist / 150})`;
-              ctx.lineWidth = 1;
-              ctx.moveTo(this.x, this.y);
-              ctx.lineTo(particles[i].x, particles[i].y);
+              ctx.strokeStyle=`rgba(67,189,220,${1-dist/150})`;
+              ctx.lineWidth=1;
+              ctx.moveTo(this.x,this.y);
+              ctx.lineTo(particles[i].x,particles[i].y);
               ctx.stroke();
             }
           }
+        }
+      }
+
+      if(mouse.x && mouse.y){
+        let dist=Math.hypot(this.x-mouse.x,this.y-mouse.y);
+        if(dist<150){
+          ctx.beginPath();
+          ctx.strokeStyle=`rgba(67,189,220,0.5)`;
+          ctx.moveTo(this.x,this.y);
+          ctx.lineTo(mouse.x,mouse.y);
+          ctx.stroke();
         }
       }
 
@@ -87,27 +109,32 @@ if (contactForm) {
     }
   }
 
-  function initParticles() {
-    particles = [];
-    const numParticles = Math.floor(canvas.width / 30);
-    for (let i = 0; i < numParticles; i++) {
-      let size = Math.random() * 3 + 2;
-      let x = Math.random() * canvas.width;
-      let y = Math.random() * canvas.height;
-      let dx = (Math.random() - 0.5) * 1.5;
-      let dy = (Math.random() - 0.5) * 1.5;
-      let type = Math.random() > 0.5 ? "cyber" : "data";
-      particles.push(new Particle(x, y, dx, dy, size, type));
+  function initParticles(){
+    particles=[];
+    const numParticles=Math.floor(canvas.width/30);
+    for(let i=0;i<numParticles;i++){
+      let size=Math.random()*3+2;
+      let x=Math.random()*canvas.width;
+      let y=Math.random()*canvas.height;
+      let dx=(Math.random()-0.5)*1.5;
+      let dy=(Math.random()-0.5)*1.5;
+      let type=Math.random()>0.5?"cyber":"data";
+      particles.push(new Particle(x,y,dx,dy,size,type));
     }
   }
 
   initParticles();
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => p.update());
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>p.update());
     requestAnimationFrame(animate);
   }
-
   animate();
-})();
+}
+
+/* Initialize for Home Hero and Contact Page */
+initCanvasParticles('heroCanvas');
+initCanvasParticles('contactCanvas');
+/* Initialize canvas particles behind About and Projects */
+initCanvasParticles('aboutCanvas');
+initCanvasParticles('projectsCanvas');
