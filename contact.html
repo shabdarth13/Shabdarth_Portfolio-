@@ -40,9 +40,7 @@
     
     <form id="contactForm"
           action="https://formsubmit.co/el/juwucu"
-          method="POST"
-          target="_blank"
-          onsubmit="showThankYouMessage()">
+          method="POST">
       <input type="text" name="name" placeholder="Your Name" required>
       <input type="email" name="email" placeholder="Your Email" required>
       <textarea name="message" placeholder="Message" required></textarea>
@@ -62,17 +60,11 @@
     <p>&copy; 2025 Shabdarth. All rights reserved.</p>
   </footer>
 
+  <!-- External script -->
   <script src="js/script.js"></script>
-  <script>
-    // Show thank you message after form submit
-    function showThankYouMessage() {
-      document.getElementById("thankYouMessage").style.display = "block";
-      setTimeout(() => {
-        document.getElementById("thankYouMessage").style.display = "none";
-      }, 5000); // Hide after 5 seconds
-    }
 
-    // Contact page themed particles: cybersecurity nodes + data bars
+  <!-- Contact page particles (unchanged) -->
+  <script>
     (() => {
       const canvas = document.getElementById('contactCanvas');
       const ctx = canvas.getContext('2d');
