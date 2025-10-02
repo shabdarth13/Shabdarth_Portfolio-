@@ -133,28 +133,14 @@
       animate();
     })();
 
-    // Form submission using Formspree
-    document.getElementById('contactForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const form = this;
-      const successMessage = document.getElementById('successMessage');
+    // Form submission using Formspree (no fetch, simple native submit)
+    const contactForm = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
 
-      fetch(form.action, {
-        method: form.method,
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(response => {
-        if(response.ok){
-          successMessage.style.display = 'block';
-          form.reset();
-        } else {
-          alert('Oops! Something went wrong. Please try again.');
-        }
-      })
-      .catch(error => {
-        alert('Network error. Please try again later.');
-      });
+    contactForm.addEventListener('submit', function(e){
+      successMessage.style.display = 'block';
+      // Hide message after 5 seconds
+      setTimeout(() => { successMessage.style.display = 'none'; }, 5000);
     });
   </script>
 </body>
