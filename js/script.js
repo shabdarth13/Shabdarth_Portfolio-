@@ -138,3 +138,21 @@ initCanvasParticles('contactCanvas');
 /* Initialize canvas particles behind About and Projects */
 initCanvasParticles('aboutCanvas');
 initCanvasParticles('projectsCanvas');
+/* =================== Circular Skill Fill =================== */
+document.querySelectorAll('.circle').forEach(circle => {
+  const percent = parseInt(circle.getAttribute('data-percent'));
+  const endAngle = (percent / 100) * 360;
+  let currentAngle = 0;
+
+  function animateFill() {
+    if (currentAngle < endAngle) {
+      currentAngle += 3; // speed of animation
+      circle.style.background = `conic-gradient(#43bddc ${currentAngle}deg, #222 ${currentAngle}deg)`;
+      requestAnimationFrame(animateFill);
+    } else {
+      circle.style.background = `conic-gradient(#43bddc ${endAngle}deg, #222 ${endAngle}deg)`;
+    }
+  }
+
+  animateFill();
+});
